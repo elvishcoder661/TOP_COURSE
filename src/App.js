@@ -3,7 +3,7 @@ import Navbar from "./component/Navbar";
 import Filter from "./component/Filter";
  import Cards from "./component/Cards";
 import {filterData,apiUrl} from "./component/Data";
-import { ToastContainer, toast } from 'react-toastify';
+import { Toast, toast } from 'react-toastify';
 
 const App = () => {
   const[courses,setCourses]=useState(null);
@@ -22,9 +22,7 @@ const App = () => {
     }
     fetchData();
   },[])
-   const notify = () => toast('Wow so easy !');
 const[category,setCategory]=useState(filterData[0].title);
-
   return (
     <div>
       <Navbar />

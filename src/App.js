@@ -1,25 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import Navbar from "./component/Navbar";
+import Filter from "./component/Filter";
+ import Cards from "./component/Cards";
+import {filterData,apiUrl} from "./component/Data";
+import { ToastContainer, toast } from 'react-toastify';
 
-function App() {
+const App = () => {
+  const[courses,setCourses]=useState(null);
+  useEffect( ()=>{
+    const fetchData=async()=>{
+      try{
+        const res=await fetch(apiUrl);
+        const output=await res.json();
+        //save data in to variable
+        console.log(output);
+       setCourses(output.data);
+      }
+      catch(error){
+         toast.error("someting went wrong");
+      }
+    }
+    fetchData();
+  },[])
+   const notify = () => toast('Wow so easy !');
+const[category,setCategory]=useState(filterData[0].title);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Navbar />
+      <Filter filterData={filterData}
+        category={category}
+        setCategory={setCategory}
+      />
+      <Cards courses={courses} category={category}/>
     </div>
   );
-}
+};
 
 export default App;
